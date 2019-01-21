@@ -87,7 +87,7 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 		}
 
 		if (password.length() < 8) {
-			System.out.println("비밀번호는 8글자 이상이어야합니다.");
+			JOptionPane.showMessageDialog(suv, "비밀번호는 8글자 이상이어야합니다.");
 			flag = false;
 		}
 
