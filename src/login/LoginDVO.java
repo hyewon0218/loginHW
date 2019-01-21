@@ -43,12 +43,7 @@ public class LoginDVO {
 		return con;
 	}//getConn
 	
-	/**
-	 * ID와 password를 입력받아 lunch_admin에서 이름을 조회하는 일
-	 * @param alvo
-	 * @return
-	 * @throws SQLException
-	 */
+	
 	public String login(LoginVO lvo)throws SQLException {
 		LoginView lv=new LoginView();
 		String adminName="";

@@ -24,7 +24,7 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 //		ID   글자수 4~8 사이
 //		PASSWORD 8자 이상 반드시 특수문자( !@#$%^&*,. ) 포함
 //		PASSWORD_CONFIRM 입력 암호와 동일
-//		Email 형식에 맞는 이메일 ==
+//		Email 형식에 맞는 이메일 
 		JTextField jtfId = suv.getJtfId();
 		String id = jtfId.getText().trim();
 
@@ -90,15 +90,15 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 			System.out.println("비밀번호는 8글자 이상이어야합니다.");
 			flag = false;
 		}
-		/////////////////////////////////
+
 		JTextField jpfPw2= suv.getJpfPw2();
 		String password_confirm = jpfPw.getText().trim();
 	      if( !( password.equals(password_confirm) ) ){
-	          System.out.println("재입력한 비밀번호가 맞지 않습니다.");
+	          JOptionPane.showMessageDialog(suv, "재입력한 비밀번호가 맞지 않습니다.");
 	          flag = false ; 
 	      }
-	      ///////////////////////////////////
-		try {
+
+	      try {
 			if (sb.toString().length()==13||sb.toString().length()==14) {
 				if (tel1.length() != 3 || !(tel2.length() > 2 && tel2.length() < 5) || (tel3.length() != 4)) {
 					JOptionPane.showMessageDialog(suv, "전화번호의 자릿수가 잘못되었습니다.");
