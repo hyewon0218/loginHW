@@ -36,7 +36,7 @@ public class LoginDVO {
 	
 	private Connection getConn() throws SQLException {
 		//2. 
-		String url="jdbc:oracle:thin:@localhost:1522:orcl";//1521안됨..
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
 		String id="scott";
 		String pass="tiger";
 		Connection con=DriverManager.getConnection(url, id, pass);
@@ -90,7 +90,9 @@ public class LoginDVO {
 	 * @param lav
 	 * @throws SQLException
 	 */
-	public void insertLunch(UserInfoVO uivo)throws SQLException {
+	public boolean insertLunch(UserInfoVO uivo)throws SQLException {
+		boolean flag=false;
+		
 		Connection con=null;
 		PreparedStatement pstmt=null;;
 		
@@ -102,18 +104,20 @@ public class LoginDVO {
 			.append("(id,password,tel,email)")
 			.append("values(?,?,?,?)");
 			pstmt=con.prepareStatement(insertLogin.toString());
-		//4.바인드 변수에 값 넣기
+
 			pstmt.setString(1, uivo.getId());
 			pstmt.setString(2, uivo.getPassword());
 			pstmt.setString(3, uivo.getTel());
 			pstmt.setString(4, uivo.getEmail());
-		//5.
-			pstmt.executeQuery();
+
+			int cnt=pstmt.executeUpdate();///////////////////////////////////
+			
 		}finally {
+
 			if(pstmt!=null) {pstmt.close();}
 			if(con!=null) {con.close();}
-		//6.
 		}
+		return flag;
 	}//insertLunch
 	/**
 	 * DB에 추가된 모든 사용자 목록 조회 

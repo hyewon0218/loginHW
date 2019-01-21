@@ -93,7 +93,7 @@ public class SignUpView extends JDialog{
 		jbSingUp.addActionListener(suc);
 		jbCancel.addActionListener(suc);
 		
-		setBounds(200, 100, 350, 300);
+		setBounds(200, 100, 350, 500);
 		setResizable(false);
 		setVisible(true);
 	}

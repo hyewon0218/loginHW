@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class SignUpController extends WindowAdapter implements ActionListener {
@@ -21,8 +22,6 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 	}
 
 	public void test() {
-//		ID   글자수 4~8 사이
-//		PASSWORD 8자 이상 반드시 특수문자( !@#$%^&*,. ) 포함
 //		PASSWORD_CONFIRM 입력 암호와 동일
 //		Email 형식에 맞는 이메일 
 		JTextField jtfId = suv.getJtfId();
@@ -36,11 +35,7 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 		} // end if
 
 		boolean flag = true;
-		// id 4~8
-		if (id.length() < 4 || id.length() > 8) {
-			JOptionPane.showMessageDialog(suv, "ID가 올바르지 않습니다.");
-			flag = false;
-		}
+		
 
 		JTextField jpfPw = suv.getJpfPw1();
 		String password = jpfPw.getText().trim();
@@ -61,8 +56,8 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 		String tel2 = jtfTel1.getText().trim();
 		String tel3 = jtfTel1.getText().trim();
 		
-		StringBuilder sb= new StringBuilder();
-		sb.append(tel1).append(tel2).append(tel3);
+		StringBuilder tel= new StringBuilder();
+		tel.append(tel1).append(tel2).append(tel3);
 		
 
 		if (tel1.equals("") || tel2.equals("") || tel3.equals("")) {
@@ -74,22 +69,7 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 
 		boolean specialKey = false;
 
-		for (int i = 0; i < password.length(); i++) {
-			char ch = password.charAt(i);
-			if ((ch >= '!' && ch <= '/') || ch == '@') {////////
-				specialKey = true;
-				break;
-			}
-		}
-		if (!specialKey) {
-			showMessageDialog(suv, "비밀번호에 특수문자가 없습니다.");
-			flag = false;
-		}
 
-		if (password.length() < 8) {
-			JOptionPane.showMessageDialog(suv, "비밀번호는 8글자 이상이어야합니다.");
-			flag = false;
-		}
 
 		JTextField jpfPw2= suv.getJpfPw2();
 		String password_confirm = jpfPw.getText().trim();
@@ -99,7 +79,6 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 	      }
 
 	      try {
-			if (sb.toString().length()==13||sb.toString().length()==14) {
 				if (tel1.length() != 3 || !(tel2.length() > 2 && tel2.length() < 5) || (tel3.length() != 4)) {
 					JOptionPane.showMessageDialog(suv, "전화번호의 자릿수가 잘못되었습니다.");
 					return;
@@ -108,9 +87,7 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 				Integer.parseInt(tel2);
 				Integer.parseInt(tel3);
 
-			} else {
-				showMessageDialog(suv, "전화번호의 형식이 올바르지 않습니다.");
-			} // end if
+			
 		} catch (NumberFormatException nfe) {
 			showMessageDialog(suv, "전화번호에 문자열이 들어있습니다.");
 			return;
@@ -118,12 +95,8 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 		
 		JTextField jtfEmail = suv.getJtfEmail1();
 		String email = jtfEmail.getText().trim();
+		///
 		
-		   int at_index = email.indexOf("@");//
-		    if( at_index > 8 || at_index < 4){
-		        JOptionPane.showMessageDialog(suv, "아이디가 8글자 이하입니다.");
-		        flag = false ;
-		    }
 	}
 
 	@Override
@@ -135,8 +108,32 @@ public class SignUpController extends WindowAdapter implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == suv.getJbSingUp()) {
 			test();///
+			String id=suv.getJtfId().getText().trim();
+			
+			String pass=suv.getJpfPw1().getText().trim();
+			
+			String tel1=suv.getJtfTel1().getText().trim();
+			
+			String tel2=suv.getJtfTel2().getText().trim();
+			
+			String tel3=suv.getJtfTel3().getText().trim();
+			
+			StringBuilder tel=new StringBuilder();
+			tel.append(tel1).append("-").append(tel2).append("-").append(tel3);
+			
+			String email1=suv.getJtfEmail1().getText().trim();
+
+			String email2=suv.getJtfEmail2().getText().trim();
+			
+			StringBuilder email=new StringBuilder();
+			email.append(email1).append("@").append(email2);
+			
+			
+			uivo=new UserInfoVO(id, pass, tel.toString(), email.toString());/////////
+					
 			try {
-				l_dvo.insertLunch(uivo);
+				LoginDVO.getInstance().insertLunch(uivo);
+				JOptionPane.showMessageDialog(suv, "회원가입이 되었습니다.");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
